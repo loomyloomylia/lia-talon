@@ -10,11 +10,11 @@ def command_history_overlay():
 
     return screen(justify_content = "flex_end", screen = 1)[
         div(flex_direction = "row", margin_bottom = 0, margin_left = 0)[
-            div(flex_direction = "row", background_color="#333333", padding = 16, border_width = 1 )[
-                text("Noise", id = "noise_name", width=0)
+            div(flex_direction = "row", background_color="#444444", padding = 16, border_width = 1 )[
+                text("Noise", id = "noise_name", width=150, font_size = 22)
             ],
-            div(id = "command_name", flex_direction = "row", background_color="#333333", padding = 16, border_width = 1)[
-                text("Command", width=200, id = "command_name" )
+            div(id = "command_name", flex_direction = "row", background_color="#444444", padding = 16, border_width = 1)[
+                text("Command", width=300, id = "command_name", font_size = 22)
             ]
         ],
     ]
