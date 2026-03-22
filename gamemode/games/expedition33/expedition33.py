@@ -48,28 +48,34 @@ user.active_manual_game: e33
 
 
 
-def look_right():
-    actions.user.stop_mouse_job('left')
-    actions.user.start_continuous_mouse_job('right',dx = 1,dy = 0,speed = 300)
+# def look_right():
+#     actions.user.stop_mouse_job('left')
+#     actions.user.start_continuous_mouse_job('right',dx = 1,dy = 0,speed = 300)
 
-def look_left():
-    actions.user.stop_mouse_job('right')
-    actions.user.start_continuous_mouse_job('left',dx = -1,dy = 0,speed = 300)
+# def look_left():
+#     actions.user.stop_mouse_job('right')
+#     actions.user.start_continuous_mouse_job('left',dx = -1,dy = 0,speed = 300)
 
-def stop_looking():
-    actions.user.stop_mouse_job('left')
-    actions.user.stop_mouse_job('right')
+# def stop_looking():
+#     actions.user.stop_mouse_job('left')
+#     actions.user.stop_mouse_job('right')
 
 
 
 exploration_config = {
-    "oh": ('move left' , lambda : actions.user.movement_button_down("left")),
-    "aa": ('move right', lambda : actions.user.movement_button_down("right")),
-    "ee": ('move up'   , lambda : actions.user.movement_button_down("up")),
-    "er": ('move down' , lambda : actions.user.movement_button_down("down")),
+    "aa:th_150": ('move left' , lambda : actions.user.movement_button_down("left")),
+    "oh:th_150": ('move right', lambda : actions.user.movement_button_down("right")),
+    "ee:th_100": ('move up'   , lambda : actions.user.movement_button_down("up")),
+    "er:th_150": ('move down' , lambda : actions.user.movement_button_down("down")),
     "eh": ('stop moving', lambda : actions.user.game_stop()),
-    "hiss": ('look clockwise', look_right),
-    "shush": ('look clockwise', look_left),
+    
+}
+
+menu_config = {
+    "aa_stop:db_250": ('move left' , lambda : actions.user.movement_button_up("left")),
+    "oh_stop:db_250": ('move right', lambda : actions.user.movement_button_up("right")),
+    "ee_stop:db_250": ('move up'   , lambda : actions.user.movement_button_up("up")),
+    "er_stop:db_250": ('move down' , lambda : actions.user.movement_button_up("down")),
 }
 
 parrot_config = exploration_config

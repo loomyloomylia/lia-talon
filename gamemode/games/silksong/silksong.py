@@ -16,6 +16,7 @@ def directional_attack(direction: str, attack_button: str = "x"):
     actions.user.button(attack_button)
     actions.user.movement_button_up(direction)
 
+
 # Needs to preserve the currently pressed direction before dashing downwards so that movement is not interrupted
 def dash_downwards():
     direction = None
@@ -35,6 +36,37 @@ def dash_downwards():
         actions.user.movement_button_down("down")
         actions.user.button("c")
         actions.user.movement_button_up("down")
+
+scuttling = False
+def scuttle():
+    global scuttling
+    if scuttling or actions.user.button_is_down('c'):
+        actions.user.movement_button_up("down")
+        actions.user.button_up("c")
+    else:
+        direction = None
+        other_direction = None
+        if actions.user.button_is_down("right"):
+            direction = "right"
+            other_direction = "left"
+        elif actions.user.button_is_down("left"):
+            direction = "left"
+            other_direction = "right"
+
+        if direction is not None:
+            actions.user.movement_button_up(direction)
+            #actions.sleep(0.5)
+            actions.user.movement_button_down("down")
+            #actions.sleep(0.5)
+            actions.user.button_down("c")
+            actions.sleep(0.2)
+            actions.user.movement_button_down(other_direction)
+        else:
+            actions.user.movement_button_down("down")
+            actions.user.button_down("c")
+    scuttling = not scuttling
+
+        
 
 # Some wrappers for combining multiple actions
 def paired_command_wrapper(first: Callable, second: Callable):
@@ -57,25 +89,27 @@ def mode_switch_wrapper(action: Callable, mode: str):
 
 ATTACK_COOLDOWN = 150
 
+oo_for_dash_attack = True # swaps the two noises for tool up and dash attack. Sometimes useful in boss fights where I don't care about tools
+
 default_config = {
     "aa": ('move left' , lambda : actions.user.movement_button_down("left")),
     "oh": ('move right', lambda : actions.user.movement_button_down("right")),
     "eh:th_50": ('stop moving', lambda : actions.user.game_stop(except_for = "z")),
-    "shush:th_250": ('switch horizontal', lambda : actions.user.switch_horizontal()),       
+    "shush:th_150": ('claw line', lambda : actions.user.button("s")),       
     "hiss": ('dash start', lambda : actions.user.button_down("c")),# was oo
     "hiss_stop:db_250": ('dash stop', lambda : actions.user.button_up("c")),
-    # "ll": ('dash attacks start', lambda : actions.user.button_down("c")),
-    "ll:th_250": ('charge attack', lambda : actions.user.button_down("x")),
-    # "ll_stop:db_100": ('dash attack stop', lambda : paired_command_wrapper(lambda : actions.user.button("x"), lambda : actions.user.button_up("c"))),
-
-    "er": ('dash down', lambda : dash_downwards()),
+    "oo" if oo_for_dash_attack else "ll": ('dash attacks start', lambda : actions.user.button_down("c")),
+    "oo_stop:db_100" if oo_for_dash_attack else "ll_stop:db_100": ('dash attack stop', lambda : paired_command_wrapper(lambda : actions.user.button("x"), lambda : actions.user.button_up("c"))),
+# 
+    "er:th_250": ('dash down', lambda : scuttle()),
+    # "er_stop:db_150": ('dash down end', lambdam : actions.user.button_up("c") ),
 
     f"palate_click:th_{ATTACK_COOLDOWN}": ('attack neutral', lambda : actions.user.button("x")),
     f"tut:th_{ATTACK_COOLDOWN}": ('attack up', lambda : directional_attack("up")),
     f"clock:th_{ATTACK_COOLDOWN}": ('attack down', lambda : directional_attack("down")),
     "ee": ('silk skill', lambda : actions.user.button("f")),
-    "oo:th_150": ('tool up', lambda : directional_attack("up", "f")), # was oo
-    "oo_stop:db_100": ('tool up', lambda : actions.user.button_up("f")), # was oo
+    "oo:th_150" if not oo_for_dash_attack else "ll:th_150": ('tool up', lambda : directional_attack("up", "f")), # was oo
+    "oo_stop:db_100" if not oo_for_dash_attack else "ll_stop:db_100": ('tool up', lambda : actions.user.button_up("f")), # was oo
     f"alveolar_click:th_{ATTACK_COOLDOWN}": ('tool down', lambda : directional_attack("down","f")),
 
 
@@ -83,7 +117,7 @@ default_config = {
     
     "buzz:th_250": ('interact', lambda : actions.user.movement_button("up")),
     # "buzz ee": ('quick map', lambda : actions.user.button_toggle("tab")),
-    
+    "zh:th_250": ('charge attack', lambda : actions.user.button_down("x")),
 
     "high_whistle": ('needlolin', lambda : actions.user.button_down("d")),
     "high_whistle_stop:db_1000": ()
@@ -151,6 +185,7 @@ parrot_config = {
     "precise": precise_movement_config,
 }
 
+
 @ctx.action_class("user")
 class SilksongActions:
     def parrot_config():
@@ -160,11 +195,13 @@ class SilksongActions:
         """Foot switch button top:down"""
         global parrot_config
         actions.user.parrot_config_set_mode("reversed")
+        actions.user.button_down("\\")
 
     def foot_switch_left_up(held: bool):
         """Foot switch button top:up"""
         global parrot_config
         actions.user.parrot_config_set_mode("default")
+        actions.user.button_up("\\")
 
     def foot_switch_center_down():
         """Foot switch button center:down"""

@@ -1,41 +1,81 @@
-from talon import Module,Context,actions,cron
+from talon import Module,Context,actions,cron,ctrl
 
 ctx = Context()
 ctx.matches = """
 mode: user.game
-user.active_manual_game: tabletopsimulator
+app: slay_the_spire_2
 """
+
+target_location = (2560/2, 1440/2)
+
+
+def play_target_less_card():
+    actions.user.save_mouse_position()
+    actions.tracking.control_gaze_toggle(False)
+    # actions.user.flex_grid_go_to_point(word,1,-1)
+
+    ctrl.mouse_click(button=0, hold=16000)
+    actions.sleep(0.2)
+    ctrl.mouse_move(*target_location)
+    ctrl.mouse_click(button=0, hold=20000)
+    actions.sleep(0.2)
+
+    actions.tracking.control_gaze_toggle(True)
+    actions.user.load_mouse_position()
+
+def change_target_location():
+    global target_location
+    target_location = ctrl.mouse_pos()
+
+    
 
 parrot_config = {
     "palate_click:th_150": ('left click', lambda: actions.user.mouse_button(0, 16000)),
     "tut:th_150": ('right click', lambda: actions.user.mouse_button(1, 16000)),
-    "clock:th_150": ('quick action', lambda: actions.core.repeat_phrase(1)),
-    "alveolar_click:th_150": ('drag toggle', lambda : actions.user.mouse_drag_toggle(0)),
+    "clock:th_150": ('quick action', lambda: play_target_less_card()),
+    "alveolar_click:th_150": ('drag toggle', lambda : change_target_location()),
     "high_whistle:th_500": ('ping', lambda : actions.user.button("tab")),
     # "hiss:db_120": ('tap', lambda: actions.user.button('e')),
-    # "shush:db_120": ('untap', lambda: actions.user.button('q')),
+    # "shush:db_120": ('untap', lambda: actions.user.button('q')) ,
     
 }
 #a
-cron_job = None
+cron_job_up = None
+cron_job_down = None
+scroll_delay_milliseconds = 50
+
 
 @ctx.action_class("user")
 class TabletopOverrides:
     def foot_switch_top_down():
+        global cron_job_up
         """Foot switch button top:down"""
-        actions.user.game_speech_toggle()
-        
+        # actions.user.mouse_scroll_up_continuous()
+        if cron_job_up is not None:
+            cron.cancel(cron_job_up)
+            cron_job_up = None
+        cron_job_up = cron.interval(f"{scroll_delay_milliseconds}ms", lambda : actions.user.mouse_scroll_up())
+
     def foot_switch_top_up(held: bool):
+        global cron_job_up
         """Foot switch button top:up"""
-        # actions.user.mouse_button_up(2)
+        cron.cancel(cron_job_up)
+        cron_job_up = None
 
-    def foot_switch_center_down():
+    def foot_switch_right_down():
+        global cron_job_down
         """Foot switch button center:down"""
-        actions.user.mouse_drag(0)
+        if cron_job_down is not None:
+            cron.cancel(cron_job_down)
+            cron_job_down = None
+        cron_job_down = cron.interval(f"{scroll_delay_milliseconds}ms", lambda : actions.user.mouse_scroll_down())
 
-    def foot_switch_center_up(held: bool):
+    def foot_switch_right_up(held: bool):
+        global cron_job_down
         """Foot switch button center:up"""
-        actions.user.mouse_drag_end()
+        cron.cancel(cron_job_down)
+        cron_job_down = None
+        
 
     def foot_switch_left_down():
         """Foot switch button left:down"""
@@ -45,13 +85,14 @@ class TabletopOverrides:
         """Foot switch button left:up"""
         actions.tracking.control_gaze_toggle(True)
 
-    def foot_switch_right_down():
+    def foot_switch_center_down():
         """Foot switch button right:down"""
-        actions.user.button_down("alt")
+        #actions.user.game_speech_toggle()
+        actions.user.mouse_button_down(0)
 
-    def foot_switch_right_up(held: bool):
+    def foot_switch_center_up(held: bool):
         """Foot switch button right:up"""
-        actions.user.button_up("alt")
+        actions.user.mouse_button_up(0)
 
     def parrot_config():
         """Returns the current parrot config"""

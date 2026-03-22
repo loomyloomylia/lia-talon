@@ -1,5 +1,6 @@
 user.active_manual_game: tabletopsimulator
 mode: user.game
+and not mode: sleep
 -
 tag(): user.point_mapping
 tag(): user.parrot_active
@@ -83,3 +84,8 @@ gamepad(right_xy:change):
 
 gamepad(r3):
     user.tabletop_joystick_click()
+
+do the thing:
+    user.do_the_thing()
+    
+    

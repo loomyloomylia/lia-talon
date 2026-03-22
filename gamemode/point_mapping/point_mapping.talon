@@ -1,4 +1,4 @@
-mode: user.game
+rmode: user.game
 tag: user.point_mapping
 -
 enable point mapping:

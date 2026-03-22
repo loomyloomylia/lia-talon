@@ -85,3 +85,7 @@ test league:
 
 # key(alt-k):
 #     print("didnt get eaten")
+
+gamepad(right_xy:change):
+    user.joystick_pan(x,y)
+

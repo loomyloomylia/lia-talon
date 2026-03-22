@@ -54,7 +54,7 @@ def stop_entering_text():
 """may need compound noises"""
 """momentum system may be useful for expanding vocab"""
 default_config = {
-    "palate_click": ("use", lambda: actions.mouse_click(0)),
+    "palate_click": ("use", lambda: actions.user.mouse_button(0, 16000)),
     "clock": ('repeat last',lambda: actions.core.repeat_phrase(1)),
     "tut": ("right click", lambda: actions.mouse_click(1)),
     "alveolar_click": ('undue', lambda : actions.key("ctrl-z")),

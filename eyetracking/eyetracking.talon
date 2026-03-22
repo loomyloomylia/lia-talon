@@ -16,6 +16,9 @@ parrot(clock):
 parrot(tut):
     user.parrot_config_noise('tut')
 
+parrot(alveolar_click):
+    user.parrot_config_noise('alveolar_click')
+
 parrot(oo):
     user.parrot_config_noise('oo')
 

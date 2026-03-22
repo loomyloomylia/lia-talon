@@ -173,6 +173,28 @@ class GenericActions:
             actions.speech.enable()
             actions.user.wake_up_color_preset()
 
+    def joystick_pan(x: float, y: float):
+        """Per game actions to be taken when the joystick is used"""
+        if not actions.user.button_is_down("d") and x > 0.3:
+            actions.user.button_down("d")
+        elif actions.user.button_is_down("d") and x <= 0.3:
+            actions.user.button_up("d")
+
+        if not actions.user.button_is_down("a") and x < -0.3:
+            actions.user.button_down("a")
+        elif actions.user.button_is_down("a") and x >= -0.3:
+            actions.user.button_up("a")
+        
+        if not actions.user.button_is_down("w") and y > 0.3:
+            actions.user.button_down("w")
+        elif actions.user.button_is_down("w") and y <= 0.3:
+            actions.user.button_up("w")
+   
+        if not actions.user.button_is_down("s") and y < -0.3:
+            actions.user.button_down("s")
+        elif actions.user.button_is_down("s") and y >= -0.3:
+            actions.user.button_up("s")
+            
 @mod.action_class
 class UtilityActions:
     def get_mouse_bearing_from_center()->float:

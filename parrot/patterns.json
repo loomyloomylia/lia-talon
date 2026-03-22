@@ -2,11 +2,12 @@
 	"clock": {
 		"sounds": ["clock"],
 		"threshold": {
-			">power": 35,
+			">power": 15,
 			">probability": 0.90
 		},
 		"throttle": {
-			"clock": 0.12
+			"clock": 0.12,
+			"alveolar_click": 0.1
 		}
 	},
 	"palate_click": {
@@ -33,7 +34,7 @@
 		"sounds": ["tut"],
 		"threshold": {
 			">power": 15,
-			">probability": 0.95
+			">probability": 0.85
 		},
 		"throttle": {
 			"tut": 0.1
@@ -46,7 +47,8 @@
 			">probability": 0.90
 		},
 		"throttle": {
-			"alveolar_click": 0.1
+			"alveolar_click": 0.1,
+			"clock": 0.12
 		}
 	},
 	"oh": {
@@ -138,7 +140,7 @@
 		"sounds": ["eh"],
 		"threshold": {
 			">power": 14,
-			">probability": 0.7
+			">probability": 0.6
 		},
 		"throttle": {
 		}
@@ -215,7 +217,7 @@
 		"sounds": ["zh"],
 		"threshold": {
 			">power": 12,
-			">probability": 0.85
+			">probability": 0.7
 		},
 		"graceperiod": 40,
 		"grace_threshold": {

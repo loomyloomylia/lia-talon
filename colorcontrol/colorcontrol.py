@@ -89,6 +89,7 @@ mod = Module()
 def load_preset(motherboard_preset, ram_preset):
     """Sets a specific color preset for command mode with the RGB in my system. 
     This function is incredibly computer specific and would not be expected to work on another machine"""
+    # return 
     try:
         client.connect()
     except ConnectionRefusedError as ex:
