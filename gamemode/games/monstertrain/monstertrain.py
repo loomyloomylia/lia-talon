@@ -6,6 +6,7 @@ context = Context()
 context.matches = """
 app: monstertrain
 mode: user.game
+user.active_manual_game: none
 """
 
 context.settings["key_hold"] = 32

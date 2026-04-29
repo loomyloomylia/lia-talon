@@ -1,5 +1,6 @@
 mode: user.game 
-app: monstertrain 
+app: monstertrain
+user.active_manual_game: none
 -
 # ^test monster train:
 #     # app.notify('monster train recognized')
