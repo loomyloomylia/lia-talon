@@ -11,7 +11,7 @@ cardinal_translator = {
     'east':'right'
 }
 
-@mod.capture(rule="(up|down|left|right =) | (north|south|east|west)")
+@mod.capture(rule="(up|down|left|right) | (north|south|east|west)")
 def direction(m) -> str :
     """captures d-pad directions with the additional option for cardinal ones"""
     if str(m) in cardinal_translator:

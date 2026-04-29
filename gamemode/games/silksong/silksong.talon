@@ -57,10 +57,10 @@ parrot(ll):
 parrot(ll:stop):
     user.parrot_config_noise("ll_stop")
 
-parrot(hiss):
+parrot(hiss_lenient):
     user.parrot_config_noise("hiss")
 
-parrot(hiss:stop):
+parrot(hiss_lenient:stop):
     user.parrot_config_noise("hiss_stop")
 
 parrot(shush):

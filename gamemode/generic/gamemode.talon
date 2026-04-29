@@ -6,11 +6,11 @@ mode: user.game
     user.command_mode_color_preset()
     user.game_stop()
 
-^stop game mode$:
-    mode.disable("user.game")
+# ^stop game mode$:
+#     mode.disable("user.game")
 
-^test game mode$:
-    app.notify('testing testing')
+# ^test game mode$:
+#     app.notify('testing testing')
 
 (go to sleep)|drowse:
     speech.disable()
@@ -18,23 +18,23 @@ mode: user.game
     user.game_stop()
     user.sleep_mode_color_preset()
 
-^help active$:
-    user.help_context_enabled()
+# ^help active$:
+#     user.help_context_enabled()
 
-^help close$:
-    user.help_hide()
+# ^help close$:
+#     user.help_hide()
 
-^help next$:
-    user.help_next()
+# ^help next$:
+#     user.help_next()
 
-^help (previous|last)$:
-    user.help_previous()
+# ^help (previous|last)$:
+#     user.help_previous()
 
-^help <number>:
-    user.help_select_index(number-1)
+# ^help <number>:
+#     user.help_select_index(number-1)
 
-^help return$:
-    user.help_return()
+# ^help return$:
+#     user.help_return()
 
 ^game stop$:
     user.game_stop()

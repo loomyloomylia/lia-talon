@@ -11,10 +11,15 @@ user.active_manual_game: silksong
 """
 
 # A combination action for pressing a direction and a button at the same time typically used for attacking
-def directional_attack(direction: str, attack_button: str = "x"):
-    actions.user.movement_button_down(direction)
-    actions.user.button(attack_button)
-    actions.user.movement_button_up(direction)
+def directional_attack(direction: str, attack_button: str = "x", hold: str = None):
+    if hold is not None:
+        print("holding ", hold)
+        actions.user.movement_button_hold(direction, hold)
+        actions.user.button_hold(attack_button, hold)
+    else:
+        actions.user.movement_button_down(direction)
+        actions.user.button(attack_button)
+        actions.user.movement_button_up(direction)
 
 
 # Needs to preserve the currently pressed direction before dashing downwards so that movement is not interrupted
@@ -38,6 +43,8 @@ def dash_downwards():
         actions.user.movement_button_up("down")
 
 scuttling = False
+using_snare_setter = True
+
 def scuttle():
     global scuttling
     if scuttling or actions.user.button_is_down('c'):
@@ -65,6 +72,11 @@ def scuttle():
             actions.user.movement_button_down("down")
             actions.user.button_down("c")
     scuttling = not scuttling
+    
+def silk_soar():
+    actions.user.movement_button_down("down")
+    actions.sleep(0.2)
+    actions.user.button_down("s")
 
         
 
@@ -86,6 +98,20 @@ def mode_switch_wrapper(action: Callable, mode: str):
     # parrot_config = mode
     actions.user.parrot_config_set_mode(mode)
     
+# switching down and up atk for certain fights or minigames
+flea_juggle_switch = False
+down_atk_sound = "clock" if not flea_juggle_switch else "tut"
+up_atk_sound = "tut" if not flea_juggle_switch else "clock"
+
+def flee_juggle_switch_toggle():
+    global down_atk_sound,up_atk_sound,flea_juggle_switch
+    flea_juggle_switch = not flea_juggle_switch
+    down_atk_sound = "clock" if not flea_juggle_switch else "tut"
+    up_atk_sound = "tut" if not flea_juggle_switch else "clock"
+
+    for dictionary_name in ("default", "reversed" ):
+            parrot_config[dictionary_name][f"{up_atk_sound}:th_{ATTACK_COOLDOWN}"] = ('attack up', lambda : directional_attack("up"))
+            parrot_config[dictionary_name][f"{down_atk_sound}:th_{ATTACK_COOLDOWN}"] = ('attack down', lambda : directional_attack("down"))
 
 ATTACK_COOLDOWN = 150
 
@@ -98,19 +124,19 @@ default_config = {
     "shush:th_150": ('claw line', lambda : actions.user.button("s")),       
     "hiss": ('dash start', lambda : actions.user.button_down("c")),# was oo
     "hiss_stop:db_250": ('dash stop', lambda : actions.user.button_up("c")),
-    "oo" if oo_for_dash_attack else "ll": ('dash attacks start', lambda : actions.user.button_down("c")),
+    "oo:th_150" if oo_for_dash_attack else "ll:th_150": ('dash attacks start', lambda : actions.user.button_down("c")),
     "oo_stop:db_100" if oo_for_dash_attack else "ll_stop:db_100": ('dash attack stop', lambda : paired_command_wrapper(lambda : actions.user.button("x"), lambda : actions.user.button_up("c"))),
 # 
-    "er:th_250": ('dash down', lambda : scuttle()),
+    "er:th_250": ('dash down', lambda : dash_downwards()),
     # "er_stop:db_150": ('dash down end', lambdam : actions.user.button_up("c") ),
 
     f"palate_click:th_{ATTACK_COOLDOWN}": ('attack neutral', lambda : actions.user.button("x")),
-    f"tut:th_{ATTACK_COOLDOWN}": ('attack up', lambda : directional_attack("up")),
-    f"clock:th_{ATTACK_COOLDOWN}": ('attack down', lambda : directional_attack("down")),
+    f"{up_atk_sound}:th_{ATTACK_COOLDOWN}": ('attack up', lambda : directional_attack("up")),
+    f"{down_atk_sound}:th_{ATTACK_COOLDOWN}": ('attack down', lambda : directional_attack("down")),
     "ee": ('silk skill', lambda : actions.user.button("f")),
     "oo:th_150" if not oo_for_dash_attack else "ll:th_150": ('tool up', lambda : directional_attack("up", "f")), # was oo
     "oo_stop:db_100" if not oo_for_dash_attack else "ll_stop:db_100": ('tool up', lambda : actions.user.button_up("f")), # was oo
-    f"alveolar_click:th_{ATTACK_COOLDOWN}": ('tool down', lambda : directional_attack("down","f")),
+    f"alveolar_click:th_{ATTACK_COOLDOWN}": ('tool down', lambda : directional_attack("down","f", "1200ms" if using_snare_setter else None)),
 
 
     "mm:th_250": ('bind',lambda : actions.user.button("a")),
@@ -135,7 +161,7 @@ default_config = {
 #     f"palate_click:th_{ATTACK_COOLDOWN}": ('attack neutral', stop_action_builder(lambda : actions.user.button("x"))),
 #     f"tut:th_{ATTACK_COOLDOWN}": ('attack up', stop_action_builder(lambda : directional_attack("up"))),
     
-#     f"clock:th_{ATTACK_COOLDOWN}": ('attack down', stop_action_builder(lambda : directional_attack("down"))),
+#     f"clock:th_{ATTACacxaK_COOLDOWN}": ('attack down', stop_action_builder(lambda : directional_attack("down"))),
     
 #     "ee": ('silk skill', stop_action_builder(lambda : actions.user.button("f"))),
 #     "oo:th_250": ('tool up', stop_action_builder(lambda : directional_attack("up", "f"))),# was hiss
@@ -144,14 +170,15 @@ default_config = {
 # A set of overrides for the default actions that combines them with a directional switch
 reversed_actions = {
     f"palate_click:th_{ATTACK_COOLDOWN}": ('attack neutral', lambda : direction_switch_wrapper(lambda : actions.user.button("x"))),
-    f"tut:th_{ATTACK_COOLDOWN}": ('attack up', lambda : direction_switch_wrapper(lambda : directional_attack("up"))),
-    f"clock:th_{ATTACK_COOLDOWN}": ('attack down', lambda : direction_switch_wrapper(lambda : directional_attack("down"))),
-    "oo:th_250": ('tool up', lambda : direction_switch_wrapper(lambda : directional_attack("up", "f"))), # was oo
+    f"{up_atk_sound}:th_{ATTACK_COOLDOWN}": ('attack up', lambda : direction_switch_wrapper(lambda : directional_attack("up"))),
+    f"{down_atk_sound}:th_{ATTACK_COOLDOWN}": ('attack down', lambda : direction_switch_wrapper(lambda : directional_attack("down"))),
+    "oo:th_150" if not oo_for_dash_attack else "ll:th_150": ('tool up', lambda : direction_switch_wrapper(lambda : directional_attack("up", "f"))), # was oo
     f"alveolar_click:th_{ATTACK_COOLDOWN}": ('tool down', lambda : direction_switch_wrapper(lambda : directional_attack("down","f"))),
-    "ll:th_250": ('charge attack', lambda : direction_switch_wrapper(lambda : actions.user.button_down("x"), 0.05)),
+    "zh:th_250": ('charge attack', lambda : direction_switch_wrapper(lambda : actions.user.button_down("x"), 0.05)),
+    
 }
 
-# A set of overrides for the default actions that enables precise movement and menu navigation
+# A set of overrides for the default actions that enables precise movement and menu naxxvigation
 # Also enables some miscellaneous actions that I do not want to misfire accidentally mid combat
 precise_movement_actions = {
     "ee": ('up', lambda : actions.user.movement_button_down("up")),
@@ -165,7 +192,16 @@ precise_movement_actions = {
     "mm": ('menu', lambda : actions.user.button("m")),
     "zh:th_250": ('dash start', lambda : mode_switch_wrapper(lambda : actions.user.button_down("c"), "default")),
     "high_whistle:th_500": ('escape menu', lambda : actions.user.button("escape")),
+    "oo:th_150": ('silk soar', lambda: mode_switch_wrapper( lambda: silk_soar(), "default")),
+    "oo_stop:db_100" : ('silk soar', lambda : actions.skip()),
+    "clock:th_{ATTACK_COOLDOWN}": ('swap up and down attack', lambda : mode_switch_wrapper(lambda : flee_juggle_switch_toggle(), "default") ),
 }
+"""
+ccxxx    
+    ccx
+    xxxxcxcx
+    cxmmmxm
+"""
     
 reversed_config = {
     **default_config,
