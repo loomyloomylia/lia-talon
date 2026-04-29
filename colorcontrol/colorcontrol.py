@@ -89,27 +89,41 @@ mod = Module()
 def load_preset(motherboard_preset, ram_preset):
     """Sets a specific color preset for command mode with the RGB in my system. 
     This function is incredibly computer specific and would not be expected to work on another machine"""
+    
     # return 
+    
     try:
-        client.connect()
-    except ConnectionRefusedError as ex:
-        print("ERROR: Server refused connection")
-        return 
-    except Exception as ex:
-        print("ERROR: Connection error")
-        return
-    motherboard = client.get_devices_by_type(DeviceType.MOTHERBOARD)[0]
-    actions.sleep(0.1)
-    motherboard.set_mode("direct")
-    actions.sleep(0.1)
-    motherboard.set_colors(motherboard_preset)
-    
-    rams = client.get_devices_by_type(DeviceType.DRAM)
-    for ram in rams:
+        try:
+            client.connect()
+        except ConnectionRefusedError as ex:
+            print("ERROR: Server refused connection")
+            return 
+        except Exception as ex:
+            print("ERROR: Connection error")
+            return
+        motherboard = client.get_devices_by_type(DeviceType.MOTHERBOARD)[0]
         actions.sleep(0.1)
-        ram.set_colors(ram_preset)
+        motherboard.set_mode("direct")
+        actions.sleep(0.1)
+                
+        COMPUTER_IS_TRIPPING_BALLS = len(motherboard.leds) > 189
+        if COMPUTER_IS_TRIPPING_BALLS:
+            # weird test
+            motherboard.set_colors(motherboard_preset + [WHITE] * (len(motherboard.leds) - 189))
+        else:
+            motherboard.set_colors(motherboard_preset)
+        
+        rams = client.get_devices_by_type(DeviceType.DRAM)
+        for ram in rams:
+            actions.sleep(0.1)
+            ram.set_colors(ram_preset)
+        
+        client.disconnect()
     
-    client.disconnect()
+    except Exception as ex:
+        print("Error initializing status leds", ex)
+
+    
 
 @mod.action_class
 class ColorControlActions:
