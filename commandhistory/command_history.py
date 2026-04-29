@@ -1,9 +1,7 @@
 from talon import actions, Module
 import time
 
-ref = actions.user.ui_elements(["ref"])
-noise_ref = ref("noise_name")
-command_ref = ref("command_name")
+
 
 def command_history_overlay():
     div, text, screen = actions.user.ui_elements(["div", "text", "screen"])
@@ -26,6 +24,9 @@ NOISE_COOL_DOWN = 0.1
 
 def command_history_noise_callback(noise: str, command: str):
     global last_noise,last_command,last_timestamp
+    ref = actions.user.ui_elements(["ref"])
+    noise_ref = ref("noise_name")
+    command_ref = ref("command_name")
     new_timestamp = time.time()
     if last_noise != noise or last_command != command:
         noise_ref.text = noise
