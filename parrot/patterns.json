@@ -43,8 +43,8 @@
 	"alveolar_click": {
 		"sounds": ["alveolar_click"],
 		"threshold": {
-			">power": 15,
-			">probability": 0.90
+			">power": 10,
+			">probability": 0.80
 		},
 		"throttle": {
 			"alveolar_click": 0.1,
@@ -54,12 +54,12 @@
 	"oh": {
 		"sounds": ["oh"],
 		"threshold": {
-			">power": 30,
-			">probability": 0.90
+			">power": 15,
+			">probability": 0.75
 		},
 		"graceperiod": 40,
 		"grace_threshold": {
-			">power": 30,
+			">power": 10,
 			">probability": 0.75
 		},
 		"throttle": {
@@ -68,12 +68,12 @@
 	"aa": {
 		"sounds": ["aa"],
 		"threshold": {
-			">power": 40,
+			">power": 20,
 			">probability": 0.80
 		},
 		"graceperiod": 40,
 		"grace_threshold": {
-			">power": 20,
+			">power": 10,
 			">probability": 0.70
 		},
 		"throttle": {
@@ -82,7 +82,7 @@
 	"ee": {
 		"sounds": ["ee"],
 		"threshold": {
-			">power": 30,
+			">power": 20,
 			">probability": 0.95
 		},
 		"graceperiod": 40,
@@ -97,7 +97,7 @@
 	"er": {
 		"sounds": ["er"],
 		"threshold": {
-			">power": 30,
+			">power": 20,
 			">probability": 0.90
 		},
 		"graceperiod": 40,
@@ -140,7 +140,7 @@
 		"sounds": ["eh"],
 		"threshold": {
 			">power": 14,
-			">probability": 0.6
+			">probability": 0.8
 		},
 		"throttle": {
 		}
@@ -149,7 +149,7 @@
 		"sounds": ["lll"],
 		"threshold": {
 			">power": 40,
-			">probability": 0.95
+			">probability": 0.90
 		},
 		"graceperiod": 40,
 		"grace_threshold": {
@@ -164,7 +164,7 @@
 		"sounds": ["hiss"], 
 		"threshold": {
 			">power": 7,
-			">probability":0.6
+			">probability":0.7
 		},
 		"graceperiod": 40,
 		"grace_threshold" : {
@@ -174,12 +174,26 @@
 		"throttle": {
 		}
 	},
+	"hiss_lenient" : {
+		"sounds": ["hiss"], 
+		"threshold": {
+			">power": 7,
+			">probability":0.55
+		},
+		"graceperiod": 40,
+		"grace_threshold" : {
+			">power": 5,
+			">probability":0.3
+		},
+		"throttle": {
+		}
+	},
 	
 	"shush": {
 		"sounds": ["shush"],
 		"threshold": {
 			">power": 20,
-			">probability": 0.95
+			">probability": 0.90
 		},
 		"graceperiod": 40,
 		"grace_threshold": {
@@ -192,7 +206,7 @@
 	"mm": {
 		"sounds": ["mm"],
 		"threshold": {
-			">power": 30,
+			">power": 18,
 			">probability": 0.95
 		},
 		"throttle": {

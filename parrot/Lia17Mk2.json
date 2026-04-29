@@ -1,0 +1,249 @@
+{
+	"clock": {
+		"sounds": ["clock"],
+		"threshold": {
+			">power": 15,
+			">probability": 0.90
+		},
+		"throttle": {
+			"clock": 0.12,
+			"alveolar_click": 0.1
+		}
+	},
+	"palate_click": {
+		"sounds": ["palate_click"],
+		"threshold": {
+			">power": 20,
+			">probability": 0.8
+		},
+		"throttle": {
+			"palate_click": 0.01
+		}
+	},
+	"palate_click_game": {
+		"sounds": ["palate_click"],
+		"threshold": {
+			">power": 40,
+			">probability": 0.90
+		},
+		"throttle": {
+			"palate_click": 0.1
+		}
+	},
+	"tut": {
+		"sounds": ["tut"],
+		"threshold": {
+			">power": 15,
+			">probability": 0.85
+		},
+		"throttle": {
+			"tut": 0.1
+		}
+	},
+	"alveolar_click": {
+		"sounds": ["alveolar_click"],
+		"threshold": {
+			">power": 15,
+			">probability": 0.90
+		},
+		"throttle": {
+			"alveolar_click": 0.1,
+			"clock": 0.12
+		}
+	},
+	"oh": {
+		"sounds": ["oh"],
+		"threshold": {
+			">power": 30,
+			">probability": 0.90
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 30,
+			">probability": 0.75
+		},
+		"throttle": {
+		}
+	},
+	"aa": {
+		"sounds": ["aa"],
+		"threshold": {
+			">power": 40,
+			">probability": 0.80
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 20,
+			">probability": 0.70
+		},
+		"throttle": {
+		}
+	},
+	"ee": {
+		"sounds": ["ee"],
+		"threshold": {
+			">power": 30,
+			">probability": 0.95
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 20,
+			">probability": 0.85
+		},
+		"throttle": {
+			
+		}
+	},
+	"er": {
+		"sounds": ["er"],
+		"threshold": {
+			">power": 30,
+			">probability": 0.90
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.8
+		},
+		"throttle": {
+		}
+	},
+	"oo": {
+		"sounds": ["oo"],
+		"threshold": {
+			">power": 20,
+			">probability": 0.95
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.7
+		},
+		"throttle": {
+		}
+	},
+	"oo_lenient": {
+		"sounds": ["oo"],
+		"threshold": {
+			">power": 20,
+			">probability": 0.75
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.5
+		},
+		"throttle": {
+		}
+	},
+	"eh": {
+		"sounds": ["eh"],
+		"threshold": {
+			">power": 14,
+			">probability": 0.6
+		},
+		"throttle": {
+		}
+	},
+	"ll": {
+		"sounds": ["lll"],
+		"threshold": {
+			">power": 40,
+			">probability": 0.95
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 20,
+			">probability": 0.75
+		},
+		"throttle": {
+			"oh": 0.1
+		}
+	},
+	"hiss": {
+		"sounds": ["hiss"], 
+		"threshold": {
+			">power": 7,
+			">probability":0.6
+		},
+		"graceperiod": 40,
+		"grace_threshold" : {
+			">power": 10,
+			">probability":0.55
+		},
+		"throttle": {
+		}
+	},
+	
+	"shush": {
+		"sounds": ["shush"],
+		"threshold": {
+			">power": 20,
+			">probability": 0.95
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.75
+		},
+		"throttle": {
+		}
+	},
+	"mm": {
+		"sounds": ["mm"],
+		"threshold": {
+			">power": 30,
+			">probability": 0.95
+		},
+		"throttle": {
+		}
+	},
+	"buzz": {
+		"sounds": ["buzz"],
+		"threshold": {
+			">power":15,
+			">probability": 0.85
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.7
+		},
+		"throttle": {
+			
+		}
+	},
+	"zh": {
+		"sounds": ["zh"],
+		"threshold": {
+			">power": 12,
+			">probability": 0.7
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 10,
+			">probability": 0.6
+		},
+		"throttle": {
+		}
+	},
+	
+	"high_whistle": {
+		"sounds": ["high_whistle"],
+		"threshold": {
+			">power":40,
+			">probability": 0.90
+		},
+		"graceperiod": 40,
+		"grace_threshold": {
+			">power": 30,
+			">probability": 0.80
+		},
+		"throttle": {
+		}
+	}
+
+
+
+	
+}
