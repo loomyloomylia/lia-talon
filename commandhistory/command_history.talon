@@ -9,3 +9,6 @@ mode: command
 ^refresh noise history$:
     user.hide_noise_history()
     user.show_noise_history()
+
+^noise history toggle screen$:
+    user.toggle_one_screen()

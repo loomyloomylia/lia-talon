@@ -70,6 +70,26 @@ def generate_muted_preset(colors: List[RGBColor], multiplier: float = 0.1):
         NEW_PRESET.append(generate_muted_color(color,multiplier))
     return NEW_PRESET
 
+def swap_red_and_green(color: RGBColor):
+    if (color.red, color.green, color.blue) in cached_calculations:
+        return cached_calculations[(color.red, color.green, color.blue)]
+    new_color = RGBColor(color.green, color.red, color.blue)
+    cached_calculations[(color.red, color.green, color.blue)] = new_color
+    return new_color
+
+def generate_swapped_preset(colors: List[RGBColor]):
+    NEW_PRESET = []
+    for color in colors:
+        NEW_PRESET.append(swap_red_and_green(color))
+    return NEW_PRESET
+
+SWAP_RED_AND_GREEN = False
+
+if SWAP_RED_AND_GREEN:
+    LESBIAN_MOTHERBOARD = generate_swapped_preset(LESBIAN_MOTHERBOARD)
+    TRANS_MOTHERBOARD = generate_swapped_preset(TRANS_MOTHERBOARD)
+
+
 LESBIAN_MOTHERBOARD_MUTED = generate_muted_preset(LESBIAN_MOTHERBOARD,0.1)
 LESBIAN_RAM_MUTED = generate_muted_preset(LESBIAN_RAM,0.1)
 

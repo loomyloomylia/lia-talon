@@ -1,3 +1,6 @@
+mode:command
+mode:sleep
+and not mode: user.game
 key(f5):
     tracking.control_toggle()
 
@@ -30,3 +33,9 @@ parrot(buzz):
 
 parrot(buzz:stop):
     user.parrot_config_noise('buzz_stop')
+
+parrot(high_whistle):
+    user.parrot_config_noise("high_whistle")
+
+parrot(high_whistle:stop):
+    user.parrot_config_noise("high_whistle_stop")

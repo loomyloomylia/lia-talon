@@ -42,10 +42,10 @@ parrot(er):
 parrot(er:stop):
     user.parrot_config_noise("er_stop")
 
-parrot(oo_lenient):
+parrot(oo):
     user.parrot_config_noise("oo")
 
-parrot(oo_lenient:stop):
+parrot(oo:stop):
     user.parrot_config_noise("oo_stop")    
     
 parrot(eh):

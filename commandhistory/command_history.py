@@ -1,12 +1,12 @@
 from talon import actions, Module
 import time
 
-
+ONE_SCREEN = False
 
 def command_history_overlay():
     div, text, screen = actions.user.ui_elements(["div", "text", "screen"])
 
-    return screen(justify_content = "flex_end", screen = 1)[
+    return screen(justify_content = "flex_end", screen = 0 if ONE_SCREEN else 1)[
         div(flex_direction = "row", margin_bottom = 0, margin_left = 0)[
             div(flex_direction = "row", background_color="#444444", padding = 16, border_width = 1 )[
                 text("Noise", id = "noise_name", width=150, font_size = 22)
@@ -47,3 +47,8 @@ class CommandHistoryActions:
         """"""
         actions.user.ui_elements_hide(command_history_overlay)
         actions.user.parrot_config_event_unregister(command_history_noise_callback)
+
+    def toggle_one_screen():
+        """"""
+        global ONE_SCREEN
+        ONE_SCREEN = not ONE_SCREEN

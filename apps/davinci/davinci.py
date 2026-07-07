@@ -6,6 +6,8 @@ os: windows
 app: da_vinci_resolve
 """
 
+dragging = False
+
 def davinci_drag():
     global dragging
     actions.user.mouse_drag(0)
@@ -31,6 +33,24 @@ parrot_config = {
     "clock": ('repeat last',lambda: actions.core.repeat_phrase(1)),
 }
 
+mod = Module()
+
+@mod.action_class
+class DavinciOriginalActions:
+    def davinci_edit_timecode(hour: int, minute: int, second: int):
+        """Edits the time code in davinci resolve automatically inserting the correct amount of zeroes for the desired timestamp"""
+        print(hour, minute, second)
+        if hour >= 0:
+            numb_string = f"{hour:02}{minute:02}{second:02}00"
+        elif minute >= 0:
+            numb_string = f"{minute:02}{second:02}00"
+        else:
+            numb_string = f"{second:02}00"
+            
+        actions.key("=")    
+        actions.insert(numb_string)
+        # actions.sleep(0.5)
+        actions.key("enter")
 
 
 @ctx.action_class("user")

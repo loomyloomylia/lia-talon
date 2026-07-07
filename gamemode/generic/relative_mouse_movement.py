@@ -37,6 +37,8 @@ class MouseMovementActions:
             # del _mouse_movement_jobs[name]
         else:
             print('job not found')
+        
+        
 
     def stop_all_mouse_jobs():
         """Stops all mouse jobs"""

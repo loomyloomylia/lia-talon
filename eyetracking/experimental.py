@@ -10,6 +10,10 @@ class ExperimentalActions:
     def enable_experimental():
         """"""
         ctx.tags = ["user.experimental_enable"]
+        
+    def tell_mouse_position():
+        """"""
+        print(ctrl.mouse_pos())
 
     def disable_experimental():
         """"""

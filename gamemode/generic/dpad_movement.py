@@ -24,7 +24,7 @@ def verify_movement_direction(direction: str):
 
 def resolve_movement_direction(direction: str) -> str:
     """Translates the movement direction into the correct button based on game_dpad_mode """
-    verify_movement_direction(direction)
+    #verify_movement_direction(direction)
     mode = settings.get("user.game_dpad_mode")
     if mode == 'wasd' or mode == 'WASD':
         match direction:
@@ -74,8 +74,8 @@ class MovementActions:
         actions.user.button(direction)
 
         # Recurses with the second direction if specified
-        if direction2 is not None:
-            actions.user.movement_button(direction2, None)
+        # if direction2 is not None:
+        #     actions.user.movement_button(direction2, None)
         
 
 
@@ -101,8 +101,8 @@ class MovementActions:
         direction_translated = resolve_movement_direction(direction)
         actions.user.button_down(direction_translated)
 
-        if direction2 is not None:
-            actions.user.movement_button_down(direction2, None)
+        # if direction2 is not None:
+        #     actions.user.movement_button_down(direction2, None)
                     
 
 
@@ -116,8 +116,8 @@ class MovementActions:
         actions.user.button_up(direction_translated)
             
         # Recurses with the second direction if specified
-        if direction2 is not None:
-            actions.user.movement_button_down(direction2, None)
+        # if direction2 is not None:
+        #     actions.user.movement_button_down(direction2, None)
 
     def movement_button_hold(button: str, timespec: str):
         """Holds a button for a specified timespec"""

@@ -21,6 +21,14 @@ def directional_attack(direction: str, attack_button: str = "x", hold: str = Non
         actions.user.button(attack_button)
         actions.user.movement_button_up(direction)
 
+def resolve_er_action():
+    if actions.user.button_is_down("d"):
+        actions.user.movement_button_down("down")
+    else:
+        dash_downwards()
+        
+    
+        
 
 # Needs to preserve the currently pressed direction before dashing downwards so that movement is not interrupted
 def dash_downwards():
@@ -43,7 +51,7 @@ def dash_downwards():
         actions.user.movement_button_up("down")
 
 scuttling = False
-using_snare_setter = True
+using_snare_setter = False
 
 def scuttle():
     global scuttling
@@ -125,9 +133,9 @@ default_config = {
     "hiss": ('dash start', lambda : actions.user.button_down("c")),# was oo
     "hiss_stop:db_250": ('dash stop', lambda : actions.user.button_up("c")),
     "oo:th_150" if oo_for_dash_attack else "ll:th_150": ('dash attacks start', lambda : actions.user.button_down("c")),
-    "oo_stop:db_100" if oo_for_dash_attack else "ll_stop:db_100": ('dash attack stop', lambda : paired_command_wrapper(lambda : actions.user.button("x"), lambda : actions.user.button_up("c"))),
+    "oo_stop:db_50" if oo_for_dash_attack else "ll_stop:db_100": ('dash attack stop', lambda : paired_command_wrapper(lambda : actions.user.button("x"), lambda : actions.user.button_up("c"))),
 # 
-    "er:th_250": ('dash down', lambda : dash_downwards()),
+    "er:th_250": ('dash down', lambda : resolve_er_action()),
     # "er_stop:db_150": ('dash down end', lambdam : actions.user.button_up("c") ),
 
     f"palate_click:th_{ATTACK_COOLDOWN}": ('attack neutral', lambda : actions.user.button("x")),
@@ -135,7 +143,7 @@ default_config = {
     f"{down_atk_sound}:th_{ATTACK_COOLDOWN}": ('attack down', lambda : directional_attack("down")),
     "ee": ('silk skill', lambda : actions.user.button("f")),
     "oo:th_150" if not oo_for_dash_attack else "ll:th_150": ('tool up', lambda : directional_attack("up", "f")), # was oo
-    "oo_stop:db_100" if not oo_for_dash_attack else "ll_stop:db_100": ('tool up', lambda : actions.user.button_up("f")), # was oo
+    "oo_stop:db_50" if not oo_for_dash_attack else "ll_stop:db_100": ('tool up', lambda : actions.user.button_up("f")), # was oo
     f"alveolar_click:th_{ATTACK_COOLDOWN}": ('tool down', lambda : directional_attack("down","f", "1200ms" if using_snare_setter else None)),
 
 

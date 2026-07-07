@@ -52,15 +52,33 @@ class GenericActions:
 
     def button_is_down(button: str) -> bool:
         """Returns true if button is currently being held"""
-        return held_button_state.get(button, False)   
+        return held_button_state.get(button, False)
+    
+    def get_button_state() -> dict:
+        """Return a dictionary of the state of all keys"""
+        return held_button_state
+    
+    def set_button_state(state: dict):
+        """Takes in a dictionary of buttons and bools and presses or releases them accordingly"""
+        for key, value in state.items():
+            if value:
+                actions.user.button_down(key)
+            else:
+                actions.user.button_up(key)
 
     def mouse_button(button: int, hold: int = None):
         """Clicks a mouse button. Meant to be used and overwritten in game mode"""
         if hold is None:
             actions.mouse_click(button)
+            
         else:
             ctrl.mouse_click(button=button, hold=hold)
         #actions.user.mouse_drag_end()
+
+    def duke():
+        """Double click"""
+        actions.user.mouse_button(0)
+        actions.user.mouse_button(0)
 
     def mouse_button_down(button: int):
         """Holds a mouse button. Meant to be used and overwritten in game mode"""
@@ -75,9 +93,19 @@ class GenericActions:
         actions.user.mouse_button_down(button)
         cron_jobs.append(cron.after(timespec, lambda : actions.user.mouse_button_up(button)))
 
+    def mouse_button_is_down(button: int) -> bool:
+        """Checks whether a specified mouse button is currently being held by talon"""
+        buttons = ctrl.mouse_buttons_down()
+        return button in buttons
+
     def set_global_variable(variable: str, value:any):
         """sets a global variable"""
         globals()[variable] = value
+
+    def set_global_variable_str(variable: str, value:str):
+        """Sets a global variable to a string value, a hacky fix for talon not liking 'any' type parameters"""
+        actions.user.set_global_variable(variable, value)
+        
 
     def get_global_variable(variable: str) -> any:
         """gets a global variable"""
