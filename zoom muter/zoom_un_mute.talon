@@ -1,10 +1,10 @@
 os: windows
 not mode: sleep
-user.running: zoom
+# user.running: zoom
 -
-^(unmute | un mute):
-    speech.disable()
-    user.focus_zoom_and_toggle_mute()
+# ^(unmute | un mute):
+#     speech.disable()
+#     user.focus_zoom_and_toggle_mute()
 
 ^kill zoom:
     user.kill_zoom()
@@ -13,7 +13,6 @@ user.running: zoom
 #       user.parrot_config_noise("palate_click")
 
 # parrot(shush):
-#       user.parrot_config_noise("hiss")
+#       user.parrot_config_noise("hiss")m
 
 # parrot(shush:stop):
-#       user.parrot_config_noise("hiss_stop")

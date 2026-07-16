@@ -177,52 +177,109 @@ parrot_config = {
     "menu": menu_config,
 }
 
-@ctx.action_class("user")
-class EldenringOverrides:
-    def parrot_config():
-        return parrot_config
 
-    def foot_switch_left_down():
-        """Foot switch button top:down"""
-        actions.user.mouse_button_down(1)
 
-    def foot_switch_left_up(held: bool):
-        """Foot switch button top:up"""
-        actions.user.mouse_button_up(1)
+USING_CONTROLLER = True
 
-    def foot_switch_center_down():
-        """Foot switch button center:down"""
-        actions.user.button_down("l")
+if not USING_CONTROLLER:
+    
 
-    def foot_switch_center_up(held: bool):
-        """Foot switch button center:up"""
-        actions.user.button_up("l")
+    @ctx.action_class("user")
+    class EldenringOverrides:
+        def parrot_config():
+            return parrot_config
 
-    def foot_switch_right_down():
-        """Foot switch button right:down"""
-        state_machine_mode_switcher("menu")
-            
+        def foot_switch_left_down():
+            """Foot switch button top:down"""
+            actions.user.mouse_button_down(1)
 
-    def foot_switch_right_up(held: bool):
-        """Foot switch button right:up"""
-        if actions.user.get_global_variable("stance_active"):
-            state_machine_mode_switcher("stance")
-        else:
-            state_machine_mode_switcher("default")
-            
+        def foot_switch_left_up(held: bool):
+            """Foot switch button top:up"""
+            actions.user.mouse_button_up(1)
 
-    def foot_switch_top_down():
-        """Foot switch button left:down"""
-        state_machine_mode_switcher("item")
-        actions.user.button_down("e")
+        def foot_switch_center_down():
+            """Foot switch button center:down"""
+            actions.user.button_down("l")
 
-    def foot_switch_top_up(held: bool):
-        """Foot switch button left:up"""
-        actions.user.button_up("e")
-        if actions.user.get_global_variable("stance_active"):
-            state_machine_mode_switcher("stance")
-        else:
-            state_machine_mode_switcher("default")
+        def foot_switch_center_up(held: bool):
+            """Foot switch button center:up"""
+            actions.user.button_up("l")
+
+        def foot_switch_right_down():
+            """Foot switch button right:down"""
+            state_machine_mode_switcher("menu")
+                
+
+        def foot_switch_right_up(held: bool):
+            """Foot switch button right:up"""
+            if actions.user.get_global_variable("stance_active"):
+                state_machine_mode_switcher("stance")
+            else:
+                state_machine_mode_switcher("default")
+                
+
+        def foot_switch_top_down():
+            """Foot switch button left:down"""
+            state_machine_mode_switcher("item")
+            actions.user.button_down("e")
+
+        def foot_switch_top_up(held: bool):
+            """Foot switch button left:up"""
+            actions.user.button_up("e")
+            if actions.user.get_global_variable("stance_active"):
+                state_machine_mode_switcher("stance")
+            else:
+                state_machine_mode_switcher("default")
+else:
+    def hold_heavy_attack():
+        TIME_TO_HOLD = 1000
+        actions.user.mouse_button_down(2)
+        cron_job = cron.after(f"{TIME_TO_HOLD}ms", lambda : actions.user.mouse_button_up(2))
+
+
+    simplified_config = {
+        "palate_click:th_150": ('light attack', lambda : actions.user.mouse_button(0)),
+        "clock": ('short heavy attack', lambda : actions.user.mouse_button(2)),
+        "clock clock": ('long heavy attack', lambda : hold_heavy_attack()),
+        "clock palate_click": ('ash of war', lambda : actions.user.button("p")),
+
+
+    }
+
+    class EldenringSimplified:
+        def parrot_config():
+            return simplified_config
+
+        def foot_switch_left_down():
+            """Foot switch button left:down"""
+            actions.user.mouse_button_down(1)
+
+        def foot_switch_left_up(held: bool):
+            """Foot switch button left:up"""
+            actions.user.mouse_button_up(1)
+
+        def foot_switch_center_down():
+            """Foot switch button center:down"""
+            actions.user.button_down("l")
+
+        def foot_switch_center_up(held: bool):
+            """Foot switch button center:up"""
+            actions.user.button_up("l")
+
+        def foot_switch_right_down():
+            """Foot switch button right:down"""
+                
+
+        def foot_switch_right_up(held: bool):
+            """Foot switch button right:up"""
+                
+
+        def foot_switch_top_down():
+            """Foot switch button left:down"""
+
+        def foot_switch_top_up(held: bool):
+            """Foot switch button left:up"""
+        
         
         
         
