@@ -5,6 +5,14 @@ ctx = Context()
 mod = Module()
 mod.tag("experimental_enable",desc = "I don't know just some shit I'm working on I guess")
 
+test_job = cron.after("1000ms", lambda: print("TESTING HIIIIII :3"))
+
+# object_methods = [method_name for method_name in dir(test_job)
+#                   if callable(getattr(test_job, method_name))]
+
+# print(object_methods)
+cron.cancel(test_job)
+
 @mod.action_class
 class ExperimentalActions:
     def enable_experimental():
@@ -18,6 +26,7 @@ class ExperimentalActions:
     def disable_experimental():
         """"""
         ctx.tags = []
+        
 
 cron_job = None
 THRESHOLD = 250

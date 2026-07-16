@@ -200,6 +200,16 @@ class GenericActions:
         else:
             actions.speech.enable()
             actions.user.wake_up_color_preset()
+            
+    def game_speech_enable():
+        """Toggles speech and noises for use in game mode, including with lighting changes"""
+        actions.speech.enable()
+        actions.user.wake_up_color_preset()
+        
+    def game_speech_disable():
+        """Toggles speech and noises for use in game mode, including with lighting changes"""
+        actions.user.sleep_mode_color_preset()
+        actions.speech.disable()
 
     def joystick_pan(x: float, y: float):
         """Per game actions to be taken when the joystick is used"""

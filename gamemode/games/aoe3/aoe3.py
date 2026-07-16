@@ -291,6 +291,13 @@ class AgeOfEmpiresActions:
     def foot_switch_top_up(held: bool):
         """Foot switch button left:up"""
 
+    def left_wink_event(start: bool):
+        """Action to be taken when left eye is winked. input of true means event has started, false is end of event"""
+        if start:
+            actions.user.game_speech_disable()
+        else:
+            actions.user.game_speech_enable()
+
     # basically never used cuz the game already does this but better ;(
     def head_joystick_changed_callback(zone: int, last_zone: int):
         """"""
@@ -350,4 +357,9 @@ class SleepActions:
     def foot_switch_top_up(held: bool):
         """Foot switch button left:up"""
 
-#endregion
+    # def left_wink_event(start: bool):
+    #     """Action to be taken when left eye is winked. input of true means event has started, false is end of event"""
+    #     if start:
+    #         actions.user.game_speech_disable()
+    #     else:
+    #         actions.user.game_speech_enable()

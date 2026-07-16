@@ -19,3 +19,9 @@ tag(): user.parrot_active
 
 ^set faction <user.aoe3_faction_type>$:
     user.set_global_variable_str("aoe3_current_faction", aoe3_faction_type)
+
+^enable face tracking$: 
+    mode.enable("face")
+
+^disable face tracking$: 
+    mode.disable("face")

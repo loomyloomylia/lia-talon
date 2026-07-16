@@ -16,11 +16,12 @@ parrot_config = {
     "clock:th_150": ('repeat last',lambda: actions.core.repeat_phrase(1)),
     # "alveolar_click": ('undue', lambda : duke()),
     "high_whistle:th_150": ('focus', lambda : actions.user.switcher_menu()),
-    # "buzz:db_300": ('start drag', lambda : actions.user.mouse_drag(0)),
-    # "buzz_stop:db_300": ('end drag', lambda : actions.user.mouse_drag_end()),
+    "buzz": ('start drag', lambda : actions.user.consistent_input_event_start("buzz_test")),
+    "buzz_stop": ('end drag', lambda : actions.user.consistent_input_event_stop("buzz_test")),
     # "eh eh": ('test',lambda: print('hello this is another test')),
     "palate_click:th_150": ('left click', lambda: click_or_release()),
     "alveolar_click:th_150": ('drag toggle', lambda : actions.user.mouse_drag_toggle(0)),
+    # "ah": ('testing', lambda : print("testing")),
 
 }
 
