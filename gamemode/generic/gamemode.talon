@@ -1,4 +1,5 @@
 mode: user.game
+and not mode: user.sleep
 - 
 ^command mode$:
     mode.disable('user.game')
@@ -39,6 +40,11 @@ mode: user.game
 ^game stop$:
     user.game_stop()
 
+key(f5):
+    tracking.control_toggle()
+
+key(shift-f8):
+    tracking.calibrate()
 
 # <user.ordinals>$:
 #     core.repeat_command(ordinals - 1)

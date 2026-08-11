@@ -23,7 +23,7 @@
 	"palate_click_game": {
 		"sounds": ["palate_click"],
 		"threshold": {
-			">power": 10,
+			">power": 15,
 			">probability": 0.80
 		},
 		"throttle": {
@@ -33,7 +33,7 @@
 	"tut": {
 		"sounds": ["tut"],
 		"threshold": {
-			">power": 8,
+			">power": 10,
 			">probability": 0.80
 		},
 		"throttle": {
@@ -43,7 +43,7 @@
 	"alveolar_click": {
 		"sounds": ["alveolar_click"],
 		"threshold": {
-			">power": 10,
+			">power": 8,
 			">probability": 0.80
 		},
 		"throttle": {

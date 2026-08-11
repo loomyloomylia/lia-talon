@@ -1,7 +1,7 @@
 from talon import Module,Context,actions
 
 mod = Module()
-mod.tag("deep_sleep_enabled",desc="Disables the drowse command in favor of a longer command string to prevent accidental activation")
+mod.tag("deep_sleep_enabled",desc="Disables the wakeup command in favor of a longer command string to prevent accidental activation")
 
 ctx = Context()
 
